@@ -1,0 +1,43 @@
+#login h1 a, .login h1 a {
+    background-image: url(../img/730-logo-white.png);
+    height:150px;
+    width:150px;
+    background-size: 150px 150px;
+    background-repeat: no-repeat;
+}
+
+body.login {
+    background-color:#00072d;
+}
+
+body.login div#login form#loginform {
+    background:none;
+}
+
+body.login div#login form#loginform p label {
+    color:white;
+}
+
+body.login div#login form#loginform input {
+    border-radius:5px;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+#wp-submit {
+    background-color:#fff;
+    color:#00072d;
+    text-shadow:none;
+}
+
+#wp-submit:hover {
+    background-color:#9DFFD2;
+}
+
+#nav > a, #backtoblog > a {
+    color: #fff !important;
+    }
+
+#nav > a:hover, #backtoblog > a:hover {
+    color: #9DFFD2 !important}
+

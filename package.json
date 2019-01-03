@@ -1,0 +1,23 @@
+{
+  "name": "730.boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^9.4.4",
+    "browser-sync": "^2.26.3",
+    "browserify": "^16.2.3",
+    "gulp": "^4.0.0",
+    "gulp-image": "^4.4.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1",
+    "tailwindcss": "^0.7.3",
+    "tailwindcss-transforms": "^1.0.2",
+    "tailwindcss-transition": "^1.0.5"
+  },
+  "dependencies": {
+    "gsap": "^2.0.2",
+    "gulp-csso": "^3.0.1",
+  }
+}
