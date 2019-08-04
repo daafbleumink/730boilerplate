@@ -1,3 +1,8 @@
+/*  
+    De font files zet je in hetzelfde mapje als de fontsheet.css
+    Per font-variant declare je als volgt de font. 
+*/
+
 @font-face {
     font-family: 'Uni Neue';
     src: url('UniNeueBold.eot');

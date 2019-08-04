@@ -1,23 +1,26 @@
 {
   "name": "730.boilerplate",
+  "description": "The boilerplate that changes lifes.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daafiejd/730boilerplate.git"
+  },
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "devDependencies": {
-    "autoprefixer": "^9.4.4",
-    "browser-sync": "^2.26.3",
-    "browserify": "^16.2.3",
-    "gulp": "^4.0.0",
-    "gulp-image": "^4.4.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.1",
-    "tailwindcss": "^0.7.3",
-    "tailwindcss-transforms": "^1.0.2",
-    "tailwindcss-transition": "^1.0.5"
-  },
   "dependencies": {
-    "gsap": "^2.0.2",
+    "browser-sync": "^2.26.7",
+    "gulp-rename": "^1.4.0",
+    "tailwindcss": "^1.0.5"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
     "gulp-csso": "^3.0.1",
+    "gulp-imagemin": "^6.0.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-purgecss": "^1.2.0",
+    "gulp-uglify": "^3.0.2"
   }
 }

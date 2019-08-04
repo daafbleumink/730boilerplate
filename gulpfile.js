@@ -1,86 +1,114 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var uglify = require('gulp-uglify');
-var postcss = require('gulp-postcss');
-var image = require('gulp-image');
-var tailwindcss = require('tailwindcss');
-var csso = require('gulp-csso');
+const autoprefixer = require('gulp-autoprefixer');
+const browsersync = require('browser-sync').create();
+const csso = require('gulp-csso');
+const gulp = require('gulp');
+const imagemin = require('gulp-imagemin');
+const purgecss = require('gulp-purgecss')
+const postcss = require('gulp-postcss');
+const uglify = require('gulp-uglify');
+const newer = require('gulp-newer');
+const tailwindcss = require('tailwindcss');
+const rename = require('gulp-rename');
 
-
-var browserSync = require('browser-sync').create();
-var reload = browserSync.reload;
-
-// Watch Paths
-var styleWatch = './src/scss/**/*.scss';
-var jsWatch = './src/scss/**/*.scss';
-var styleWatch = './src/scss/**/*.scss';
-
-// Stating browserSync options
-var browserSyncOptions = {
-    browser: "chrome",
-    port: '80',
-    proxy: "localhost/test",
-    notify: false
-};
-
-// Browsersync
-function browser_sync(done) {
-
-    browserSync.init(browserSyncOptions);
-
+// BrowserSync
+function browserSync(done) {
+    browsersync.init({
+        browser: 'firefox',
+        proxy: "localhost/730v3",
+        notify: false
+    });
     done();
+  }
+  
+  // BrowserSync Reload
+  function browserSyncReload(done) {
+    browsersync.reload();
+    done();
+  }
 
-};
+  // Optimize Images
+function images() {
+    return gulp
+      .src("./src/img/*")
+      .pipe(newer("./dist/img"))
+      .pipe(
+        imagemin([
+          imagemin.gifsicle({ interlaced: true }),
+          imagemin.jpegtran({ progressive: true }),
+          imagemin.optipng({ optimizationLevel: 5 }),
+          imagemin.svgo({
+            plugins: [
+              {
+                removeViewBox: false,
+                collapseGroups: true
+              }
+            ]
+          })
+        ])
+      )
+      .pipe(gulp.dest("./dist/img"));
+    }
+
+// Purge CSS
+function purgeCSS() {
+  return gulp.src('./dist/css/tailwind.css')
+        .pipe(purgecss({
+            content: ['./*.php']
+        }))
+}
 
 // Compile Tailwind + Minifying the output
-function css(done) {
+function css() {
 
     // Compile Tailwind
-    return gulp.src('./src/scss/style.scss')
-        .pipe(sass().on('error', sass.logError))
+    return gulp.src('./src/css/tailwind.css')
         .pipe(postcss([
-            tailwindcss('./tailwind.js'),
-            require('autoprefixer'),
+            tailwindcss('./tailwind.config.js'),
         ]))
-        .pipe(gulp.dest('./src/scss')) 
-        
-        // Minify the file
+        // Supporting all browsers
+        .pipe(autoprefixer())
+        // Storing the complete tailwind.css for fallback purposes
+        .pipe(gulp.dest('./dist/css'))
+        // PurgeCSS
+        .pipe(purgeCSS())
+        // Minify CSS
         .pipe(csso())
+        // Renaming tailwind.css
+        .pipe(rename("style.css"))
         .pipe(gulp.dest('./'))
-        .pipe(browserSync.stream());
-        done();
-};
+    }
  
-// Optimize images
-function image(done) {
-  gulp.src('./src/img/*')
-    .pipe(image())
-    .pipe(gulp.dest('./dist/img'));
-    done();
-};
-
 // Compress JS
 function js(done) {
     gulp.src('./src/js/*.js')
     .pipe(uglify())
-    .pipe(gulp.dest('./dist/js'));
-    done();
-};
+    .pipe(gulp.dest('./dist/js'))
+    done()
+    }
 
+// Watch files
+function watchFiles() {
+    gulp.watch("./src/css/*", css);
+    gulp.watch("./src/js/*", js);
+    gulp.watch(      
+        [
+        "./*.php",
+        "./page-templates/*.php",
+        "./page-templates/components/*.php",
+      ],
+      browserSyncReload
+    );
+    gulp.watch("./src/img/*", images);
+    }
 
-function watch_files() {
-    gulp.watch(styleWatch, css);
-    gulp.watch(jsWatch, gulp.series(js, reload));
-};
+// Define complex tasks
+const compile = gulp.series(css, js, images);
+const watch = gulp.parallel(watchFiles, browserSync);
 
-gulp.task("css", css);
-
-gulp.task("js", js);
-
-gulp.task("browser-sync", browser_sync);
-
-gulp.task("image", image);
-
-gulp.task("default", gulp.series(image, css, js, browser_sync));
-
-gulp.task("watch", gulp.series(watch_files, browser_sync));
+// Export tasks
+exports.purgecss = purgeCSS;
+exports.css     = css;
+exports.images  = images;
+exports.js      = js;
+exports.watch   = watch;
+exports.default = compile;
