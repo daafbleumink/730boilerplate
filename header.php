@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Designed & Developed with ♥ and ☕ by 730. -->
+<!-- Made with 🔥 and 🤘🏼 by 730. -->
 
 <html <?php language_attributes(); ?>>
 
