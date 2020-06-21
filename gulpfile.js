@@ -8,7 +8,6 @@ const terser = require('gulp-terser');
 const newer = require('gulp-newer');
 const purgecss = require('gulp-purgecss');
 const rename = require('gulp-rename');
-const sasss = require('gulp-sass');
 
 // BrowserSync
 function browserSync(done) {
@@ -86,8 +85,8 @@ function js(done) {
   return gulp.src('./src/js/*.js')
     .pipe(concat('scripts.js'))
     .pipe(gulp.dest(destination))
-    .pipe(rename('scripts.min.js'))
     .pipe(terser())
+    .pipe(rename('scripts.min.js'))
     .pipe(gulp.dest(destination))
 }
 
