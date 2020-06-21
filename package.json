@@ -7,20 +7,27 @@
   },
   "version": "1.0.0",
   "main": "index.js",
+  "author": "730.",
+  "keywords": [
+    "WordPress",
+    "Theme"
+  ],
+  "bugs": {
+    "url": "https://github.com/730projects/730boilerplate/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "browser-sync": "^2.26.7",
-    "gulp-rename": "^1.4.0",
-    "tailwindcss": "^1.0.5"
-  },
-  "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
+    "gulp-concat": "^2.6.1",
     "gulp-csso": "^3.0.1",
     "gulp-imagemin": "^6.0.0",
     "gulp-newer": "^1.4.0",
     "gulp-postcss": "^8.0.0",
     "gulp-purgecss": "^1.2.0",
-    "gulp-uglify": "^3.0.2"
+    "gulp-rename": "^1.4.0",
+    "gulp-terser": "^1.2.0",
+    "tailwindcss": "^1.0.5"
   }
 }

@@ -3,10 +3,12 @@ const csso = require('gulp-csso');
 const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
 const postcss = require('gulp-postcss');
-const uglify = require('gulp-uglify');
+const concat = require('gulp-concat');
+const terser = require('gulp-terser');
 const newer = require('gulp-newer');
 const purgecss = require('gulp-purgecss');
 const rename = require('gulp-rename');
+const sasss = require('gulp-sass');
 
 // BrowserSync
 function browserSync(done) {
@@ -51,7 +53,7 @@ function images() {
 function purgeCSS() {
   return gulp.src('./dist/css/tailwind.css')
         .pipe(purgecss({
-            content: ['./*.php']
+            content: ['./header.php', './footer.php', './index.php', './404.php', './single.php', './archive.php', './page-templates/*.php', './page-templates/**/*.php']
         }))
 }
 
@@ -75,18 +77,23 @@ function css() {
         // Renaming tailwind.css
         .pipe(rename("style.css"))
         .pipe(gulp.dest('./'))
-    }
+}
  
 // Compress JS
 function js(done) {
-    gulp.src('./src/js/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/js'))
-    done()
-    }
+  destination = './dist/js'
+  
+  return gulp.src('./src/js/*.js')
+    .pipe(concat('scripts.js'))
+    .pipe(gulp.dest(destination))
+    .pipe(rename('scripts.min.js'))
+    .pipe(terser())
+    .pipe(gulp.dest(destination))
+}
 
 // Watch files
 function watchFiles() {
+    gulp.watch("./src/scss/*", compileSass).on('change', browsersync.reload);
     gulp.watch("./src/css/*", css);
     gulp.watch("./src/js/*", js);
     gulp.watch(      
