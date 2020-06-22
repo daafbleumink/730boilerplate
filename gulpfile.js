@@ -92,7 +92,6 @@ function js(done) {
 
 // Watch files
 function watchFiles() {
-    gulp.watch("./src/scss/*", compileSass).on('change', browsersync.reload);
     gulp.watch("./src/css/*", css);
     gulp.watch("./src/js/*", js);
     gulp.watch(      
